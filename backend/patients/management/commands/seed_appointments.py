@@ -1,0 +1,125 @@
+from django.core.management.base import BaseCommand, CommandError
+from django.utils import timezone
+from datetime import timedelta, date, time, datetime
+import random
+
+from patients.models import Patient, Appointment
+from django.db import connection
+from employees.models import User, Employee
+
+STATUS_CHOICES = [s[0] for s in Appointment.STATUS_CHOICES]
+APPOINTMENT_TYPES = [t[0] for t in Appointment.APPOINTMENT_TYPE_CHOICES]
+
+class Command(BaseCommand):
+    help = 'Truncate appointments and seed dummy appointments. Dentists come from Employee.user and patients from Patient table.'
+
+    def add_arguments(self, parser):
+        parser.add_argument('--patient-id', type=str, help='Patient.patient_id to seed appointments for')
+        parser.add_argument('--count', type=int, default=50, help='Number of appointments to create')
+        parser.add_argument('--truncate', action='store_true', help='If provided, truncate existing appointments first')
+
+    def handle(self, *args, **options):
+        patient_id = options.get('patient_id')
+        count = options.get('count') or 50
+        truncate = options.get('truncate')
+
+        # Load all patients (will pick randomly per appointment)
+        patients = list(Patient.objects.all())
+        if not patients:
+            raise CommandError('No patients found in database')
+
+        # If patient_id provided, restrict to that patient only
+        if patient_id:
+            try:
+                specific = Patient.objects.get(patient_id=patient_id)
+                patients = [specific]
+            except Patient.DoesNotExist:
+                raise CommandError(f'Patient with id {patient_id} not found')
+            self.stdout.write(f'Seeding {count} appointments for patient: {specific} (id={specific.id})')
+        else:
+            self.stdout.write(f'Seeding {count} appointments across {len(patients)} patients')
+
+        # Always clear appointments to ensure a clean seed state
+        Appointment.objects.all().delete()
+        self.stdout.write('Deleted existing appointments.')
+
+        # Reset auto-increment / sequence depending on DB backend
+        vendor = connection.vendor
+        try:
+            with connection.cursor() as cursor:
+                if vendor == 'mysql':
+                    cursor.execute('ALTER TABLE %s AUTO_INCREMENT = 1' % Appointment._meta.db_table)
+                    self.stdout.write('Reset MySQL AUTO_INCREMENT for %s' % Appointment._meta.db_table)
+                elif vendor == 'postgresql':
+                    # set sequence to 1
+                    seq_sql = "SELECT setval(pg_get_serial_sequence('%s','id'), 1, false);" % Appointment._meta.db_table
+                    cursor.execute(seq_sql)
+                    self.stdout.write('Reset PostgreSQL sequence for %s' % Appointment._meta.db_table)
+                elif vendor == 'sqlite':
+                    cursor.execute("DELETE FROM sqlite_sequence WHERE name='%s'" % Appointment._meta.db_table)
+                    self.stdout.write('Reset SQLite sequence for %s' % Appointment._meta.db_table)
+        except Exception as e:
+            self.stdout.write(self.style.WARNING('Failed to reset DB sequence: %s' % e))
+
+        # determine date span: today .. today + 14
+        today = date.today()
+        start = today
+        end = today + timedelta(days=14)
+        date_range = (end - start).days + 1
+
+        # Select dentist users from Employee records where position title contains 'dentist'
+        emp_qs = Employee.objects.filter(position__title__icontains='dentist', status='active').select_related('user')
+        dentist_users = [e.user for e in emp_qs if e.user]
+        # Fallback to any users if none found
+        if not dentist_users:
+            dentist_users = list(User.objects.all()[:10])
+
+        # Choose a created_by user (optional) - use first user or None
+        created_by = User.objects.first() if User.objects.exists() else None
+
+        created = 0
+        attempts = 0
+        # create up to `count` appointments
+        while created < count and attempts < count * 5:
+            attempts += 1
+            # pick a random date in range
+            offset = random.randint(0, max(0, date_range - 1))
+            apt_date = start + timedelta(days=offset)
+            # random time between 08:00 and 16:30 in 30-minute intervals
+            hour = random.randint(8, 16)
+            minute = random.choice([0, 30])
+            apt_time = time(hour=hour, minute=minute)
+
+            status = random.choice(STATUS_CHOICES)
+            apt_type = random.choice(APPOINTMENT_TYPES)
+            # pick a random dentist user (may be None if no users available)
+            dentist_user = random.choice(dentist_users) if dentist_users else None
+            # random duration in minutes
+            duration = random.choice([15, 30, 45, 60])
+
+            # simple reason/notes
+            reason = f"Dummy appointment {created + 1}"
+            notes = "Generated by seed_appointments management command"
+
+            # pick a random patient for this appointment
+            apt_patient = random.choice(patients)
+
+            # create appointment record
+            Appointment.objects.create(
+                patient=apt_patient,
+                dentist=dentist_user,
+                appointment_date=apt_date,
+                appointment_time=apt_time,
+                duration=duration,
+                appointment_type=apt_type,
+                status=status,
+                reason=reason,
+                notes=notes,
+                created_by=created_by
+            )
+            created += 1
+
+        if patient_id:
+            self.stdout.write(self.style.SUCCESS(f'Created {created} appointments for patient {patient.patient_id}'))
+        else:
+            self.stdout.write(self.style.SUCCESS(f'Created {created} appointments across {len(patients)} patients'))

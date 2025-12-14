@@ -1,0 +1,1 @@
+web: gunicorn denthub_project.wsgi --chdir backend --log-file -

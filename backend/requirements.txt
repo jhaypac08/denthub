@@ -1,0 +1,13 @@
+Django==5.0
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+pymysql==1.1.0
+python-decouple==3.8
+Pillow==10.1.0
+lunardate>=0.2.0
+# pin a compatible version of lunardate; install with 'pip install -r requirements.txt'
+
+# Production / deployment
+gunicorn==22.1.0
+whitenoise==6.5.0
+dj-database-url==1.0.0

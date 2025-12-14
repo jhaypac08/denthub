@@ -1,0 +1,196 @@
+/* Aquatic Turquoise Clarity Dental Care Palette */
+:root {
+  --primary-turquoise: #00B2A9;
+  --dark-turquoise: #007B7F;
+  --light-cyan: #A9E1E9;
+  --pale-cyan: #E6FFFF;
+  --dark-slate: #2F404A;
+}
+
+/* Primary Buttons */
+.btn-primary {
+  background-color: var(--primary-turquoise) !important;
+  border-color: var(--primary-turquoise) !important;
+  color: white !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--dark-turquoise) !important;
+  border-color: var(--dark-turquoise) !important;
+  box-shadow: 0 2px 8px rgba(0, 178, 169, 0.3) !important;
+}
+
+/* Success Buttons */
+.btn-success {
+  background-color: var(--primary-turquoise) !important;
+  border-color: var(--primary-turquoise) !important;
+}
+
+.btn-success:hover {
+  background-color: var(--dark-turquoise) !important;
+  border-color: var(--dark-turquoise) !important;
+}
+
+/* Info Buttons */
+.btn-info {
+  background-color: var(--light-cyan) !important;
+  border-color: var(--light-cyan) !important;
+  color: var(--dark-slate) !important;
+}
+
+.btn-info:hover {
+  background-color: var(--primary-turquoise) !important;
+  border-color: var(--primary-turquoise) !important;
+  color: white !important;
+}
+
+/* Links */
+a {
+  color: var(--primary-turquoise);
+}
+
+a:hover {
+  color: var(--dark-turquoise);
+}
+
+/* Card Headers */
+.card-header {
+  background-color: var(--primary-turquoise) !important;
+  color: white !important;
+  border-bottom: 2px solid var(--dark-turquoise);
+}
+
+.card-primary .card-header {
+  background-color: var(--primary-turquoise) !important;
+}
+
+/* Form Controls Focus */
+.form-control:focus {
+  border-color: var(--primary-turquoise) !important;
+  box-shadow: 0 0 0 0.2rem rgba(0, 178, 169, 0.25) !important;
+}
+
+/* Badges */
+.badge-primary {
+  background-color: var(--primary-turquoise) !important;
+}
+
+.badge-success {
+  background-color: var(--primary-turquoise) !important;
+}
+
+.badge-info {
+  background-color: var(--light-cyan) !important;
+  color: var(--dark-slate) !important;
+}
+
+/* Progress Bars */
+.progress-bar {
+  background-color: var(--primary-turquoise) !important;
+}
+
+/* Pagination */
+.page-item.active .page-link {
+  background-color: var(--primary-turquoise) !important;
+  border-color: var(--primary-turquoise) !important;
+}
+
+.page-link {
+  color: var(--primary-turquoise) !important;
+}
+
+.page-link:hover {
+  color: var(--dark-turquoise) !important;
+  background-color: var(--pale-cyan) !important;
+}
+
+/* Sidebar Navigation */
+.sidebar .nav-link.active {
+  background-color: rgba(0, 178, 169, 0.2) !important;
+  color: white !important;
+}
+
+/* Custom Control Checkbox */
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: var(--primary-turquoise) !important;
+  border-color: var(--primary-turquoise) !important;
+}
+
+/* Switch */
+.custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: var(--primary-turquoise) !important;
+  border-color: var(--primary-turquoise) !important;
+}
+
+/* Dropdown */
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--pale-cyan) !important;
+  color: var(--dark-slate) !important;
+}
+
+/* Table Hover */
+.table-hover tbody tr:hover {
+  background-color: var(--pale-cyan) !important;
+}
+
+/* Alert Info */
+.alert-info {
+  background-color: var(--pale-cyan) !important;
+  border-color: var(--light-cyan) !important;
+  color: var(--dark-slate) !important;
+}
+
+/* Small Box (Dashboard Widgets) */
+.small-box {
+  border-radius: 8px;
+}
+
+.small-box.bg-info {
+  background-color: var(--primary-turquoise) !important;
+}
+
+.small-box.bg-success {
+  background-color: var(--dark-turquoise) !important;
+}
+
+/* Footer */
+.main-footer {
+  background-color: var(--pale-cyan) !important;
+  border-top: 2px solid var(--light-cyan);
+  color: var(--dark-slate);
+}
+
+/* Modal Headers */
+.modal-header {
+  background-color: var(--primary-turquoise) !important;
+  color: white !important;
+}
+
+/* Input Group Text */
+.input-group-text {
+  background-color: var(--primary-turquoise) !important;
+  border-color: var(--primary-turquoise) !important;
+  color: white !important;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+  background-color: #f4f6f9 !important;
+}
+
+/* Loading Spinner */
+.spinner-border {
+  color: var(--primary-turquoise) !important;
+}
+
+/* Tabs */
+.nav-tabs .nav-link.active {
+  border-color: var(--primary-turquoise) var(--primary-turquoise) #fff !important;
+  color: var(--primary-turquoise) !important;
+}
+
+.nav-tabs .nav-link:hover {
+  border-color: var(--light-cyan) var(--light-cyan) var(--pale-cyan) !important;
+}

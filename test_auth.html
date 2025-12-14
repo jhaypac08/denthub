@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auth Test</title>
+</head>
+<body>
+    <h1>Authentication Test</h1>
+    <button onclick="getCsrf()">1. Get CSRF Token</button>
+    <button onclick="login()">2. Login</button>
+    <button onclick="getCurrentUser()">3. Get Current User</button>
+    <button onclick="createBranch()">4. Create Branch</button>
+    <button onclick="showCookies()">Show Cookies</button>
+    
+    <pre id="output"></pre>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api';
+        
+        function log(message) {
+            const output = document.getElementById('output');
+            output.textContent += message + '\n\n';
+            console.log(message);
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function showCookies() {
+            log('All Cookies: ' + document.cookie);
+            log('CSRF Token: ' + getCookie('csrftoken'));
+            log('Session ID: ' + getCookie('sessionid'));
+        }
+
+        async function getCsrf() {
+            try {
+                const response = await fetch(`${API_BASE}/csrf/`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                log('CSRF Response: ' + JSON.stringify(data));
+                showCookies();
+            } catch (error) {
+                log('CSRF Error: ' + error);
+            }
+        }
+
+        async function login() {
+            try {
+                const csrfToken = getCookie('csrftoken');
+                const response = await fetch(`${API_BASE}/login/`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({
+                        username: 'admin',
+                        password: 'admin123'
+                    })
+                });
+                const data = await response.json();
+                log('Login Response: ' + JSON.stringify(data));
+                log('Set-Cookie Header: ' + response.headers.get('Set-Cookie'));
+                log('Response Headers: ' + JSON.stringify([...response.headers.entries()]));
+                showCookies();
+            } catch (error) {
+                log('Login Error: ' + error);
+            }
+        }
+
+        async function getCurrentUser() {
+            try {
+                const csrfToken = getCookie('csrftoken');
+                const response = await fetch(`${API_BASE}/current-user/`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'X-CSRFToken': csrfToken
+                    }
+                });
+                const data = await response.json();
+                log('Current User Response: ' + JSON.stringify(data));
+            } catch (error) {
+                log('Current User Error: ' + error);
+            }
+        }
+
+        async function createBranch() {
+            try {
+                const csrfToken = getCookie('csrftoken');
+                const response = await fetch(`${API_BASE}/branches/`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({
+                        name: 'Test Branch',
+                        location: 'Test Location',
+                        phone: '1234567890',
+                        is_active: true
+                    })
+                });
+                const data = await response.json();
+                log('Create Branch Response: ' + JSON.stringify(data));
+            } catch (error) {
+                log('Create Branch Error: ' + error);
+            }
+        }
+    </script>
+</body>
+</html>

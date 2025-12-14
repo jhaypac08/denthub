@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentHub Dental Clinic - Your Smile, Our Priority</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-tooth"></i>
+                <span>DentHub</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#branches" class="nav-link">Branches</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="http://192.168.1.18:5173" id="patient-portal-link" class="btn-primary">Portal Login</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Carousel -->
+    <section id="home" class="hero">
+        <div class="hero-carousel">
+            <!-- Slides will be loaded dynamically from API -->
+        </div>
+    </section>
+            <span class="indicator" onclick="currentSlide(2)"></span>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Comprehensive dental care tailored to your needs</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-teeth"></i>
+                    </div>
+                    <h3>General Dentistry</h3>
+                    <p>Regular checkups, cleanings, fillings, and preventive care to maintain your oral health.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-smile-beam"></i>
+                    </div>
+                    <h3>Cosmetic Dentistry</h3>
+                    <p>Teeth whitening, veneers, and smile makeovers to enhance your appearance.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tooth"></i>
+                    </div>
+                    <h3>Orthodontics</h3>
+                    <p>Braces, aligners, and other treatments to straighten and align your teeth.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Oral Surgery</h3>
+                    <p>Tooth extractions, wisdom teeth removal, and other surgical procedures.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Dental Implants</h3>
+                    <p>Permanent tooth replacement solutions for missing teeth.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <h3>Pediatric Dentistry</h3>
+                    <p>Specialized care for children's dental health and development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">About DentHub</h2>
+                    <p>DentHub Dental Clinic has been serving the community with exceptional dental care for over a decade. Our team of experienced dentists and modern facilities ensure you receive the best treatment possible.</p>
+                    
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>State-of-the-art Equipment</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Experienced Professionals</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Flexible Scheduling</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Affordable Pricing</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3>10,000+</h3>
+                        <p>Happy Patients</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-award"></i>
+                        <h3>15+</h3>
+                        <p>Years Experience</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-user-doctor"></i>
+                        <h3>25+</h3>
+                        <p>Expert Dentists</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Branches Section -->
+    <section id="branches" class="branches">
+        <div class="container">
+            <h2 class="section-title">Our Branches</h2>
+            <p class="section-subtitle">Visit us at any of our convenient locations</p>
+            
+            <div id="branches-list" class="branches-grid">
+                <!-- Branches will be loaded dynamically -->
+                <div class="loading">Loading branches...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-subtitle">Get in touch with us for appointments or inquiries</p>
+            
+            <div class="contact-content">
+                <div class="contact-form-wrapper">
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="branch">Preferred Branch</label>
+                            <select id="branch" name="branch">
+                                <option value="">Select a branch</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary btn-large">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="info-card">
+                        <i class="fas fa-phone"></i>
+                        <h4>Call Us</h4>
+                        <p>+63 123 456 7890</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-envelope"></i>
+                        <h4>Email Us</h4>
+                        <p>info@denthub.com</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-clock"></i>
+                        <h4>Office Hours</h4>
+                        <p>Mon-Sat: 8:00 AM - 8:00 PM</p>
+                        <p>Sunday: Closed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <i class="fas fa-tooth"></i>
+                        <span>DentHub</span>
+                    </div>
+                    <p>Your smile is our priority. Experience world-class dental care.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#branches">Branches</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DentHub Dental Clinic. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
