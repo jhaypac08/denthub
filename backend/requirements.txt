@@ -8,6 +8,6 @@ lunardate>=0.2.0
 # pin a compatible version of lunardate; install with 'pip install -r requirements.txt'
 
 # Production / deployment
-gunicorn==22.1.0; sys_platform != "win32"
+gunicorn==22.0.0; sys_platform != "win32"
 whitenoise==6.5.0
 dj-database-url==1.0.0
